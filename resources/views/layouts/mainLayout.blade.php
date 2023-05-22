@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rental Buku | @yield('title')</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    
+    <div class="main d-flex flex-column justify-content-between">
+        <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Rental Buku</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
+          </nav>
+        <div class="body-content h-100">
+            <div class="row g-0 h-100">
+                <div class="sidebar col-lg-2 collapse d-lg-block pt-4" id="navbarTogglerDemo02" >
+                    @if (Auth::user())
+                        @if (Auth::user()->role_id == 1)
+                            <a href="/dashboard" @if(request()->route()->uri == 'dashboard') class='active' @endif>Dashboard</a>
+                            <a href="/books" @if(request()->route()->uri == 'books') class='active' @endif>Books</a>
+                            <a href="/categories" class="{{ (Request::is('categories') || Request::is('category-add') || Request::is('category-deleted') || Request::is('category-edit/{slug}')) ? 'active' : '' }}">Categories</a>
+                            <a href="/users" @if(request()->route()->uri == 'users') class='active' @endif>Users</a>
+                            <a href="/rent-logs" @if(request()->route()->uri == 'rent-logs') class='active' @endif>Rent Logs</a>
+                            <a href="/" @if(request()->route()->uri == '/') class='active' @endif>Book List</a>
+                            <a href="/book-rent" @if(request()->route()->uri == 'book-rent') class='active' @endif>Book Rent</a>
+                            <a href="/book-return" @if(request()->route()->uri == 'book-return') class='active' @endif>Book Return</a>
+                        @endif
+                        
+                        @if (Auth::user()->role_id == 2) 
+                            <a href="/profile" class="{{ Request::is('profile') ? 'active' : '' }}">Profile</a>
+                            <a href="/" class="{{ Request::is('/') ? 'active' : '' }}">Book List</a>
+                        @endif
+                            <a href="/logout">Logout</a>
+                    @else
+                        <a href="/login">Login</a>
+                    @endif
+                </div>
+                <div class="content p-5 col-lg-10">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select-multiple').select2();
+        });
+      </script>
+</body>
+</html>
